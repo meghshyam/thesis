@@ -1,0 +1,96 @@
+\chapter*{Abstract}
+\thispagestyle{empty}
+Digital imaging is being extensively used in 
+%almost all sectors ... irrelevant addition
+in today's world. However, it is quite difficult to take acceptable pictures from a handheld
+camera in several situations, such as the inspection of nuclear reactors, dams, etc. Recently
+imaging in such situations using Unmanned Aerial Vehicles (UAV) have gained focus. A
+quadcopter, or a quadrotor helicopter, is one of the unpiloted aerial vehicles
+that has substantial maneuverability and hovering ability. With its small size and
+agile maneuverability, a quadcopter can be flown indoors as well as
+outdoors. Due to its ability to go to inaccessible areas 
+% (e.g., terraces of high-rise buildings, hills, etc.) 
+and to capture high-quality images from the
+onboard camera, it has become popular in various applications.
+%  search and rescue. .. search and rescue is incompatible with the idea of inspection, and 
+% maneuverability, and dams which you make reference to below.
+
+Applications such as the inspection of a dam require details (e.g., small cracks can be an indication of failure).
+% in the final output. what is "final" output doing here?
+One solution to this is to image such planar objects from a short distance, and orthogonal to the plane. Quadcopters can be flown to capture details, but the proximity results in a reduced field of view. Thus there is a need to create a panoramic representation from photos or videos taken from a flying craft.
+% req However, the manual inspection of the captured video is time consuming
+% as well as prone to error. We have to create a suitable representation from the
+% captured video so that even minute details (e.g., small cracks in the dam) are
+% detected accurately. One such representation can be panoramic construction from
+% the video encompassing the whole scene. 
+
+Generalizing, there are two research problems in creating a panoramic mosaic from videos captured by a quadcopter. First,
+the number of images from the captured video is beyond the capacity of standard
+mosaicing software such as Adobe Photoshop. This requires identifying ``interesting" pictures from the video. Second, if there are regions in the scene with few 
+or no ``features'' (e.g., gaps between regions, or textureless regions) or if patterns
+repeat in a scene (e.g., posters in an art exhibition), it is not possible for existing
+mosaicing techniques to construct a panorama. The reason behind 
+the failure is the complete reliance of standard mosaicing techniques on the computer vision based matching
+algorithm to stitch the interesting images. Lack of features (``vacant spaces") confound the algorithm.  Repeated features confuse the algorithm resulting in incorrect mosaicing.
+
+We solve these two problems by leveraging additional information from the quadcopter.
+Our helper to solve these problems is the Inertial Measurement Unit (IMU) that
+is present on any quadcopter. The IMU can give us a reasonable estimate of
+the position from where each image is captured. We have developed an image selection
+algorithm which uses the positional data from the calibrated IMU to discover optimal
+images encompassing the input scene. Standard stitchers match each image
+with every other image for finding suitable pairs before stitching them
+together. However, as we arrange selected images into a rectangular grid
+according to their positions, we just need to match images which are present in
+the 8-neighborhood of a given image, and adjust for overlap, scale, and rotational data.
+If there are vacant spaces in an input scene, the matcher has no way to connect pieces, and we  get multiple mini-panoramas representing disconnected parts of the scene. The mini-panoramas are then joined together appropriately with the help of positional information to form the super-panorama. The efficacy of our approach is demonstrated on a number of input sequences that cannot be mosaiced by existing methods.
+
+The above approach results in successful mosaicing an input scene spread over a \emph{single} planar
+surface, regardless of the presence of vacant spaces, or repeated features. In the real world, we expect to  encounter multiple piecewise planar surfaces, or even curved surfaces. Manually navigating the quadcopter around such large surfaces for the purpose of capturing a video footage is 
+very tedious. We present a method for autonomous
+navigation of a quadcopter for imaging large multiplanar surfaces. The method
+uses the Parallel Tracking and Mapping (PTAM) based approach to create an 
+approximate sparse 3D map of the input scene which will be used to fit
+multiplanar bounded regions. Later, the positions to independently image each bounded planar region
+are determined and the quadcopter is autonomously maneuvered along those positions
+%to image the area specified by the user. 
+The eventual result is an ``unrolled'' view of the input scene where we
+get the output mosaic of the input scene as if it is present on a single plane.
+%Hence, we have developed an algorithm which first creates a mosaic of each
+%planar region using homography based stitching and later joins the mosaics of
+%each planar region together using plane information and camera positions. We
+%have shown the potency of the method on datasets imaged on various combinations
+%of multiplanar surfaces.
+
+A quadcopter's limited battery is a major hurdle we experienced during
+the imaging of multiplanar scenes. Our typical quadcopter battery is
+sustained only for approximately 20-30 minutes, and this is not enough
+for imaging large scenes in a single flight. We consider the use of
+multiple quadcopters %for imaging large multiplanar surface
+to overcome this battery issue. To collaborate, the relative spatial
+position of the quadcopters have to be identified, so as to divide the
+work in an appropriate manner. Fiducials come to our rescue for
+tracking objects in this environment.
+%Using fiducials on quadcopters can
+%help in collaboration between them to image large multiplanar surfaces.
+At the same time, quadcopters are subject to quick and unstable motions that can cause
+significant motion blur in the captured images. This severely affects the
+detection rate of existing fiducials.  We propose the design of a fiducial that is resilient to motion blur. 
+%The design of contrasting concentric rings is based on the observation that the
+%direction perpendicular to the motion blur direction will be unaffected by the
+%blur and therefore still be recognizable. 
+It is shown through experimental
+validation that our fiducial will work under large amounts of motion blur and
+can significantly outperform existing fiducials under this scenario. 
+%It is also
+%demonstrated that using such fiducials one can tell from which side of the
+%quadcopter we are gazing.
+
+% Our overall work focuses on overcoming the challenges faced during imaging of
+% the multiplanar scenes through quadcopter. We have developed an algorithm which
+% solves the ``vacant spaces'' problem in mosaicing of a planar scene by using
+% positional information (IMU). We have also proposed a vision based technique for
+% autonomous navigation of quadcopter for efficiently imaging scene spread over a
+% multiplanar surface. Each plane is imaged from normal viewpoints and output an
+% unrolled panoramic view of the scene. Finally, we have designed a blur resilient
+% fiducial for tracking of the quadcopter in the environment.        

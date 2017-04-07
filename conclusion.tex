@@ -1,0 +1,47 @@
+\chapter{Conclusions and Future Work}
+\label{sec:conclusion}
+Unmanned Aerial Vehicles (UAVs) such as quadcopters have made it possible to
+image human inaccessible areas for various applications such as inspection of
+dams, art galleries. Manual navigation of the quadcopter is a very tedious task
+which gives inaccurate results. Hence there is need of a robust technique  for
+accurate navigation of quadcopter for imaging surfaces. We also need
+to need to construct a suitable representation of an input scene such that all
+details are precisely captured. 
+
+In this thesis, we have presented a method for autonomous navigation of
+quadcopter for imaging scene spread over the multiplanar surface. This method
+first estimates the path along which quadcopter needs to be maneuvered. It also
+finds out the optimal positions from which we need to capture the images so that
+those images encompass the whole scene. Finally, we accurately maneuever the
+quadcopter along the estimated path and output unrolled view of the scene spread
+over multiplanar surface.
+
+Many times surfaces such as dams, art galleries contain large featureless
+regions. State of the art stitching algorithms such as Adobe Photoshop fails to
+create complete panorama due to the failure of feature matching algorithm to
+find enough matches. We have developed an algorithm for creation of mosaic in such cases to
+get the complete panorama. This algorithm leverages the positional information
+available from calibrated quadcopter to solve ``vacant'' spaces problem.
+
+We have also focussed on the design of blur resilient fiducials for tracking of
+objects. Fiducial is designed in such a way that the embedded code remains
+intact irrespective of the direction of blur. We have developed a fiducial
+detection method based on Principal Component Analysis (PCA) of Gabor filter
+output on the input scene. We can put these fiducials on the quadcopter so that
+it can be identified uniquely in the case of collaboration among multiple
+quadcopters.
+
+\section{Future Work}
+Our method for autonomous navigation of quadcopter to image multiplanar
+surfaces works only if all surfaces are seen from a single point. However,
+there may be cases where all surfaces cannot be seen from a single point. One
+can extend our work so that in first flight we will collect information of all
+surfaces, plan the estimated path and then maneuver the quadcopter autonomously
+along the estimated path. Another extension of this work also can be done in
+direction of handling of any parametric surface compared to just planar
+surfaces.
+
+Currently, our fiducial detection algorithm is not real-time. This can be
+improved by using parallel implementation of Gabor filter using GPU-based
+system. The number of fiducials can also be increased by using color-based
+codes.
