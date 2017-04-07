@@ -1,152 +1,207 @@
 \chapter{Introduction}
 \label{ch:intro}
-Unmanned Aerial Vehicles (UAV), more familiarly known as drones, are
-increasingly used in aerial
-surveillance~\cite{dronesurvey1, dronesurvey3}, transporting
-medicines~\cite{dronedelivery1,dronedelivery2}, photography~\cite{dronephoto1,
-dronephoto2, dronephoto3}, archeology~\cite{dronearchaeology} etc.
-Due to their ability to go to inaccessible areas, e.g., terraces of high-rise
-buildings, hills, etc., they are indispensable for search and rescue
-operations. Drones have reportedly been used in search and rescue operation in
-flood-hit areas in Uttarakhand in 2013. They have also been used for military
-purposes, e.g., surveillance to restrict infiltration in border
-areas~\cite{dronesurvey2}.
-
-Drones may be classified into two types: those which can hover (e.g.,
-quadcopters, octocopters, etc.), those which cannot (mainly military drones
-used for surveillance, attack, etc.). We are interested in the first type due
-to their ability to capture still photographs and videos. Such drones enable us
-to do close inspection which is required in many applications. Currently, in the market variety of
-quadcopters are available from USD 100 to USD 3000. Some models are shown
-in Figure~\ref{fig:quadcopters}.
-Each one has its own specialty. However, for autonomous navigation, we require 
-three characteristics. First, it should have a camera with good resolution (at
-least 1080 x 720 pixels). Second, it should be able to communicate with a
-computer through some protocol and third, we should be able to fly it indoors as
-well as outdoors.
-
-\begin{figure}[h!]
-\centering
-\includegraphics[width=0.98\linewidth]{figures/quadcopters}
-\caption[Different models of quadcopters]{Different models of
-quadcopters.[Picture Courtesy: Google image search]}
-\label{fig:quadcopters}
-\end{figure}
-
-Generally, the first requirement is met in all quadcopters, but only a few
-quadcopters satisfy second and third requirements. For example, DJI Phantom 4
- has a camera mounted on 3-axis gimbal coupled with a gyroscope. It enables
-us to take very stable video while flying. But, till now there is no way to interface DJI
-Phantom 4 with a computer. We have to use joystick-like control provided along
-with the quadcopter to manually navigate the quadcopter.
-Octocopters such as  DJI S1000 have excellent flight control as well as
-stability. But due to its bulky nature (weight around 11Kg), we cannot use it
-in indoor areas.
-
-There are a few assembled quadcopter systems which became quite popular lately,
-e.g., the team at the University of Pennsylvania have developed a series of
-quadcopters capable of doing unbelievable maneuvers. However, such systems use motion camera
-systems such as Vicon to find out the pose of the quadcopters in motion.
-Hence, we cannot use it in uncontrolled environments.
-
-Parrot's ARDrone and Bebop are two reasonably priced (USD 350 and USD
-700 respectively) quadcopters having HD camera with resolution 1280 x 720
-pixels. Though it is lightweight (420 grams) compared to DJI Phantom 4
-(around 1.4kg) , it is robust enough to withstand outdoor conditions. ARDrone streams
-a WiFi hotspot to which any computer can be connected. Parrot has also released SDK which is helpful to
-do interfacing with these quadcopters. When I had started work on
-quadcopters (in mid-2013), Parrot's Bebop was not available (which was released
-only in the end of 2015). Hence, I have used Parrot's ARDrone 2.0 for my
-research work presented in this thesis.
+Digital imaging is omnipresent in today's world. There are many
+handheld cameras available in the market that lets us take
+high-definition pictures. Nevertheless, it is quite difficult to take
+satisfying pictures from these cameras in certain scenarios, as we see
+shortly.
 
 \section{Motivation}
-%There are two main challenges in using drones for various applications.
-%One of them is proper navigation and control of the drone, and another is
-%the analysis of images captured by the camera to understand the scene.
 
-Consider a situation where  we are inspecting a dam for cracks. We need to ensure
-that all small cracks are detected along with their respective positions from
-the captured video. Manual inspection of videos is prone to (human) errors. 
-So we need to develop an efficient algorithm to process the video and output
-desirable representation of the input scene. One of the useful representations
-is a full panoramic view of the dam constructed from closeups of the patches. 
+Consider a situation where we wish to inspect a dam by taking
+pictures and following that up with offline post-processing.  We
+would like to ensure that fissures, or cracks in the dam, along with
+their respective positions, are flagged.  We cannot use a handheld
+camera in this case as the approach to the dam is usually
+inaccessible. As an additional example, next, consider
+Figure~\ref{fig:orthographicView} which depicts a scene where
+we wish to capture images of a large wall. The perspective view of the
+wall doesn't provide details of objects such as the indicated dial.
 
-However, large textureless regions containing very few features, of surfaces 
-like a dam pose challenges to the use of homography based stitching to create 
-the panorama. Hence, there is a requirement of a method which can incorporate 
-additional information available from drone to do mosaicing of scenes with 
-featureless regions, i.e., vacant spaces. 
-
-We need to navigate the quadcopter smoothly to image large planar surfaces in
-order to get good quality images from closeup. Developed countries like the US
-have been using military grade drones with superior technology which enables us to
-navigate a drone with point precision. But as these drones are very expensive,
-their use is limited in developing countries. Also, as these drones use the GPS
-for navigation, we cannot use them in indoor scenes. Even if the GPS signal is
-available, we cannot rely only on GPS for navigation of drones due to reasons 
-like GPS jamming, spurious GPS signals. Although, we may think of navigating drone
-manually in such cases, it will be cumbersome and prone to human errors.
-Hence, there is need of developing a stable technique for autonomous navigation
-and control of drones in various scenarios to overcome the drawbacks.
-
-Imaging large planar surfaces using a single quadcopter in one flight is not
-always feasible due to battery constraints. In such cases, one may use multiple
-quadcopters in collaboration to complete the task. The robust identification of
-each quadcopter under motion is needed for using multiple quadcopters. Fiducial
-markers are generally used to robustly identify objects in the environment. But,
-current fiducials such as ARtag do not get detected under motion blur as these
-heavily depend on the detection of geometric patterns such as lines, corners, etc.
-The need of developing blur resilient fiducials which can be detected 
-robustly under a heavy motion blur arises.
-
-The problem of autonomous navigation of quadcopters to image multiplanar
-surfaces with correctly distinguishing each quadcopter with the help of blur
-resilient fiducial forms the basis of the work presented in this thesis.\\
-
-\section{Problem Statement}
-\textit{We would like to autonomously navigate the quadcopter to image
-single as well as multiple planar regions and create a mosaic of the 
-scene. We would also like to identify quadcopter under motion robustly for
-better collaboration among multiple quadcopters.} 
-
-We decompose our problem of mosaicing a multiplanar scene containing
-vacant spaces through the autonomous navigation of one or more quadcopters
-into the following steps:
-\begin{enumerate}
-  \item Mosaicing a single planar scene containing vacant spaces through
-  a quadcopter.
-  \item Path planning for imaging a planar scene through a quadcopter.
-  \item Autonomous navigation of quadcopter for imaging a multiplanar scene.
-  \item Unroll the scene spread over multiple planes.
-  \item Device a mechanism for robust detection of quadcopter under motion. 
-\end{enumerate}
-Each of these steps is non-trivial and challenging as explained below. In this
-thesis, we deal with these steps by leveraging information available from a quadcopter.  
-
-\section{Challenges}
-The challenges which make our problem interesting to solve are as follows. 
-\begin{itemize}
-  \item \textbf{Imaging scenes orthographically from close range:}
-We need to image scenes in such a way that we can capture fine details
-(e.g., cracks in structures like a dam, bridge, etc.). One such example is shown
-in Figure \ref{fig:orthographicView}. In this example, we need to take the photo
-orthographically from close range in order to get the details of the pressure
-dial which are missing from the perspective view taken from the long range. The
-dimensions of the wall make it impossible to image it orthographically  using
-a handheld camera. 
+In both of these cases, we wish to image the wall orthographically, i.e.,
+by keeping the viewing direction normal to the wall.  Further, the
+camera must be close to the wall if we are to capture details; as a
+corollary, this implies that we have to move the camera along the two
+dimensions of the wall to image the entire surface.
 
 \begin{figure}[h!]
 \centering
 \includegraphics[width=0.98\linewidth]{figures/orthographicView}
-\caption[Problems in imaging large scene using a handheld camera]{Illustration of
-problems in imaging large planar scene with a handheld camera. A 40 feet wall
-captured with a handheld camera from a distance doesn't capture details
-such as the pressure dial shown in the box. We wish to capture such large
-planar structures by placing the camera much closer and normal to the plane
-being imaged.}
+\caption[Problems in imaging a large scene using a handheld
+  camera]{Illustration of problems in imaging large planar scene with
+  a handheld camera. A 40 feet wall captured with a handheld camera
+  from a distance doesn't reveal details of the dial shown in the
+  box. We wish to image such large planar structures by placing the
+  camera close to and normal to the plane and later mosaic individual
+  pieces.}
 \label{fig:orthographicView}
 \end{figure}
 
+\emph{Quadcopters} (quadrotor helicopters) can be used to image large
+planar surfaces from a close distance such as dams. Note that, as
+mentioned above, we cannot capture an orthographic view of the entire
+large planar surface from such distance in a single frame. In fact, we
+will get a battery of images to encompass the whole scene
+orthographically. These images must be stitched to get a panoramic
+view.  Such a view will allow us to do post-processing as desired.
+
+Panoramic construction requires alignment of overlapped
+images~\cite{Brown03}.  These methods rely significantly on finding
+common \textit{features} in overlapped images so as to establish
+appropriate warps to register or align the images together. When we
+attempt to use these methods for the purposes mentioned here, we noted
+that there are cases where the imaged surface contains large textureless
+regions. We term these regions as \emph{vacant spaces}. For example, in an art
+gallery example shown in Figure~\ref{fig:indoor}, we have exhibits separated by
+``empty spaces''. Notice that in Figure~\ref{fig:indoor}, images $\alpha$,
+$\alpha'$, $\beta$, and $\beta'$ have `features', while images A, B, and C do
+not have any significant features.  We can align images $\alpha$ with $\alpha
+'$ as well as $\beta$ with $\beta '$, but not $\alpha$ with A, or C with
+$\beta$.  Similarly, we cannot align A with B or B with C. Large homogeneous
+vacant spaces result in scene regions that have little or no matches between
+many significant images. As a result, we cannot create a panorama using
+traditional mosaicing methods. In our example, we cannot build a bridge between
+$\alpha$ and $\beta$ due to the presence of vacant space, which results in
+disconnected components. Hence, there is a requirement of a method that can
+infer positions to assist in mosaicing.  In this thesis, we propose the use of
+quadcopters.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.98\linewidth]{figures/vacantSpaces/indoor}
+\caption[Vacant spaces problem in art gallery]{Vacant spaces are
+  encountered in the imaging of this scene. When individual portions
+  are captured by a quadcopter, how does one create the complete
+  mosaic, given that common features are unavailable? In this example,
+  $\alpha$ and $\alpha '$ can be aligned, and so can $\beta$ and
+  $\beta '$. This is not true for the constituents of the 5-tuple ($\alpha$, A,
+  B, C, and $\beta$).}
+\label{fig:indoor}
+\end{figure}
+    
+Now, consider yet another situation where, with quadcopters as the
+instrument, we would like to capture the paintings or murals on large
+walls of a temple. We would like to ensure that details of the
+painting are captured in a sufficient high definition. Often, temple
+paintings are arranged in sequential order, depicting a particular
+mythological story. In such cases, we would like to capture these
+paintings spread over multiple walls and create an \emph{unrolled}
+view of the scene where we get the output mosaic of the input scene as if it is
+present on a single plane.  We have to make sure that capturing is done in a
+manner such that full scene is imaged in minimum time to reduce inconvenience.
+
+In such cases, we have to navigate the quadcopter smoothly to image
+large multiplanar surfaces from a close distance. We examine current
+options available for the navigation and control of quadcopter.  Most
+predominantly, First Person View (FPV) controllers are available with
+current quadcopters. However, considerable manual adjustments are
+needed using the FPV to ensure specific depth, impacting the time of
+capture. Next, if we have to capture large surfaces, the manual effort
+is non-trivial.  Finally, as always with a manual procedure (and from
+our experience), there is a high probability of collision during
+these adjustments which may cause damage to the precious monuments.
+
+The need for more control has led to software applications, typically
+mobile based, for semi-autonomous navigation of a quadcopter.  As an
+example, we can use these mobile applications to do basic maneuvers
+(e.g., ``go from position X to position Y''). While these applications
+are satisfactory for casual situations such as taking selfies, they
+are unsuitable for the problem at hand.  For example, we cannot ensure
+an orthographic view from a specific depth, even while traveling
+autonomously along two dimensions of a large planar structure.  These
+applications are not sufficiently autonomous either, to navigate the
+quadcopter autonomously. Hence, there is a requirement of developing a
+stable technique for autonomous navigation and control of quadcopters
+in indoor as well as outdoor scenarios.
+ 
+Imaging large multiplanar surfaces using a single quadcopter in one
+flight is not always feasible due to battery constraints. In such
+cases, one may use multiple quadcopters in collaboration. The
+identification of every quadcopter under motion is essential for using
+multiple quadcopters. Fiducial markers such as ARTag have been used to
+identify objects. However, due to the swift motion of a quadcopter, a
+significant amount of motion blur is introduced. If such fiducials are
+placed on non-stationery objects, they do not get recognized because
+recognition of these fiducials depends on the detection of geometric
+patterns such as lines, corners, etc.  Hence, there is a necessity of
+developing blur resilient fiducials which can be detected robustly
+when placed on swift moving objects such as quadcopters.
+
+\section*{Problem Statement}
+\textit{The problem of autonomous navigation of quadcopters to image
+  multiplanar surfaces containing vacant spaces with correct
+  identification of individual quadcopter forms the problem statement
+  of the work presented in this thesis.}
+
+We decompose our problem of mosaicing a multiplanar scene containing
+vacant spaces through the autonomous navigation of one or more
+quadcopters into the following steps:
+\begin{enumerate}
+  \item Mosaicing a \textit{single} planar scene, possibly containing vacant
+  spaces.
+  \item Autonomous navigation of quadcopter for imaging a multiplanar scene.
+	\begin{enumerate}
+  		\item Path planning for imaging each planar region in a multiplanar scene.
+	\end{enumerate}
+  \item Unrolling scenes spread over multiple planes.
+  \item Devising a mechanism for robust detection of quadcopters under swift
+  motion.
+\end{enumerate}
+Each of these steps is non-trivial and challenging as explained in
+next section. In this thesis, we deal with these steps by leveraging
+the additional information available onboard the quadcopter.
+
+In considering quadcopters, we briefly consider factors for the selection of
+the imaging instrument. We require at a minimum three characteristics in
+quadcopters to achieve the goal of autonomous navigation. First, quadcopters
+should have a camera with reasonable resolution (at least 1080 x 720
+pixels). Second, they should be able to communicate with a computer
+through a well-established protocol. Third, we should be able to fly
+them indoors as well as outdoors. The cost is clearly a factor once
+these three requirements are satisfied.
+
+The first requirement is met in most of the quadcopters, but only a
+few quadcopters satisfy the second and third requirements
+simultaneously. For example, the DJI Phantom 4, costing around 1200
+USD has a camera mounted on 3-axis gimbal coupled with a gyroscope. It
+enables us to take very stable videos while flying. There are FPV
+controllers as well as mobile applications available for
+semi-autonomous navigation of DJI Phantom 4. But as discussed earlier,
+these options are not useful in solving our problem.  Also, there is
+inadequate open-source software support for autonomous navigation of
+DJI Phantom 4.
+
+Some quadcopters have a GPS to assist navigation. But we cannot use
+GPS facility in an indoor scenario. Even if the GPS signal is
+available, we cannot rely only on GPS for navigation of quadcopters in
+outdoor scenarios due to GPS jamming and the spurious GPS signals.
+
+Octocopters such as DJI S1000 have excellent flight control as well as
+stability. But due to their bulky nature (weight around 11Kg), we
+cannot use it in indoor areas. There are a few non-commercial
+quadcopter systems which have gained focus, e.g., the team at the
+University of Pennsylvania has developed a series of quadcopters
+capable of doing unbelievable maneuvers. However, such systems use
+high-speed motion camera systems such as Vicon to find out the pose of
+the quadcopter in motion. Hence, we cannot use them in uncontrolled
+environments.
+
+Parrot's ARDrone and Bebop are two reasonably priced (USD 350 and USD
+700 respectively) quadcopters having HD camera with resolution 1280 x 720
+pixels. Though they are lightweight (0.42 kg) compared to the DJI Phantom 4
+(around 1.4kg), they are robust enough to withstand outdoor conditions. ARDrone
+streams a WiFi hotspot to which any computer can be connected. Parrot has also
+released an SDK which is essential to do interfacing with these quadcopters.
+When I had started work on quadcopters (in mid-2013), Parrot's Bebop was not
+available. Hence, I have used Parrot's ARDrone 2.0 for my research work
+presented in this thesis.
+
+\section*{Challenges}
+\label{sec:challenges}
+The challenges which make our problem interesting to solve are as follows.
+
+\begin{itemize}
+  
 \begin{figure}[h!]
 \centering
 \includegraphics[width=0.98\linewidth]{figures/vacantSpaces}
@@ -158,121 +213,152 @@ our knowledge about geography to complete the puzzle.}
 \label{fig:vacantSpaces}
 \end{figure}
   
-  \item \textbf{Vacant spaces and regions with confusing features:} 
-  Mosaicing a scene is similar to solving a jigsaw puzzle like the one shown in
-  Figure~\ref{fig:vacantSpaces} where individual pieces of puzzle can be
-  thought of constituent images to create a full mosaic. We need to match pair
-  of pieces to join them together similar to stitching algorithm which finds
-  matches in two images for finding the relative position of one image with
-  another image. Blank pieces representing the ocean make such puzzles hard to solve, because
-   we have to match each and every suitable blank piece. Similarly, images containing very
-   less features or confusing features are difficult to match. Here, we have to use
-   additional positional information (e.g., geography in the puzzle shown in
-   Figure~\ref{fig:vacantSpaces}) to join different parts separated by vacant
-   spaces together.
+  \item \textbf{Vacant spaces and regions with confusing features:}
+    Mosaicing a scene is similar to solving a jigsaw puzzle like the one shown in
+  Figure~\ref{fig:vacantSpaces}. Here, individual pieces of the puzzle can be
+  thought of as constituent images in a mosaic. We have to match
+  pieces and join them. This is similar to the stitching algorithms
+  which find matches in two images for estimating the relative position of one
+  image with respect to another image. Normally, pieces can be placed at their
+  correct positions by matching a color, texture, as wells as a shape on the piece,
+  e.g., if there is a red colored piece, we can consider only other red
+  colored pieces whose boundaries match with the first piece. The blank
+  pieces representing the seas make such puzzles hard to solve. While solving
+  jigsaw puzzle containing blank pieces, we could build the parts of the
+  puzzle, e.g., ``Americas" and rest of the world as shown in
+  Figure~\ref{fig:vacantSpaces}. However, we cannot place these parts at
+  their respective positions as we cannot match these parts with blank
+  pieces to complete the puzzle. Here, we have to use additional positional
+  information (e.g., geography in the puzzle shown in
+  Figure~\ref{fig:vacantSpaces}) to join different parts separated by
+  vacant spaces. In general, images containing very less or no features are
+  difficult to match.
+
+  The standard mosaicing method uses feature matching algorithms for
+  estimating the homography between two images. Feature matching algorithms
+  require detection of sufficient features in both images. However, scenes like
+  Figure~\ref{fig:vacantSpacesExample}(left) contain large regions with vacant
+  spaces. Such regions result in very few (or almost zero) features which pose
+  a problem for stitching images containing such regions. The output (shown in
+  Figure~\ref{fig:vacantSpacesExample}-right) of Adobe Photoshop~\cite{photoshop}, 
+  a popular mosaicing software showcases the inability to handle vacant spaces.
   
-\begin{figure}[h!]
-\centering
-\includegraphics[width=0.98\linewidth]{figures/vacantSpaces/indoor}
-\caption[Vacant spaces problem in art gallery]{Vacant spaces are encountered in
-various scenes.
-When individual portions are captured by a quadcopter, how does one create the complete mosaic
-    given that common features are not available as in this example}
-\label{fig:indoor}
-\end{figure}
-  
-  Art galleries like the one shown in Figure \ref{fig:indoor}, have exhibits
-  separated by empty spaces. If we would like to image these scenes from closeup, we may not
-  be able to mosaic the captured images due to vacant space. The standard
-  mosaicing method uses feature matching algorithms for estimating homography
-  between two images. It requires detection of sufficient features in both
-  images. But scenes like Figure~\ref{fig:vacantSpacesExample}(left) contain
-  large regions with vacant spaces. Such regions result in very few (or almost
-  zero) features which pose a problem for stitching images containing such regions.
-  The output (shown in Figure~\ref{fig:vacantSpacesExample}-right) of Adobe
-  Photoshop, a popular mosaicing software showcases the inability to
-  handle vacant spaces.
-  
-  \begin{figure}[h!]
+ \begin{figure}[h!]
 \centering
 \includegraphics[width=0.98\linewidth]{figures/vacantSpacesExample}
  \caption[Problem of mosaicing scene with vacant spaces using Adobe
- Photoshop]{Is Mosaicing problem solved? Standard stitchers such as Adobe Photoshop cannot stitch
- images which have no or very little features in  common, such as images with huge vacant spaces.}
+ Photoshop]{Is Mosaicing problem solved? Standard stitchers such as Adobe
+ Photoshop~\cite{photoshop} cannot stitch images which have none or very little
+ features in common. Left: there is an input scene containing vacant space
+ separating the two posters (indicated by the red oval). Right: Adobe Photoshop
+ outputs individual pieces instead of complete mosaic as feature matching
+ algorithm fails.}
 \label{fig:vacantSpacesExample}
 \end{figure}
  
-  The feature matching algorithm gets confused when parts of the scene are
-  repeated. It results in images which are not taken from adjacent positions
-  being stitched together (See Figure~\ref{fig:confusingFeatures}).
+  There is another problem with standard stitching algorithms due to 
+  reliance on feature matching. The feature matching algorithm gets confused
+  when parts of the scene are repeated. It results in images which are not
+  taken from adjacent positions being stitched together.
+  Figure~\ref{fig:confusingFeatures} shows output of
+  AutoStitch~\cite{autostitch}, the state of the art stitcher, on an input scene
+  containing repetitive patterns. It can be seen that images taken from
+  positions far apart from each other get stitched together as the matching
+  algorithm matches features from those images.
 
 \begin{figure}[h!]
 \centering
 \includegraphics[width=0.98\linewidth]{figures/confusingFeaturesExample}
 \caption[Problem of confusing features in AutoStitch]{Repetitive patterns in the
-input scene pose a challenge for standard mosaicing methods such as AutoStitch. Images taken from positions
-far apart from each other get stitched together as matching algorithm matches
-features from those images.}
+input scene pose a challenge for standard mosaicing methods such as
+AutoStitch~\cite{autostitch}. Images taken from positions far apart from each
+other get stitched together as matching algorithm matches features from those
+images.}
 \label{fig:confusingFeatures}
 \end{figure}  
 
   \item \textbf{Control and navigation of an inexpensive quadcopter:}
-  Inexpensive quadcopters like Parrot's ARDrone are very agile and can do
-  several maneuvers swiftly. However, controlling it to image large planar
-  regions smoothly by keeping a constant distance from the imaging plane is very
-  difficult because of tendency of quadcopter to drift from its desired
-  position. Also, manual control of quadcopter is a very laborious job.
-  Hence, there is need of a mechanism for autonomous navigation of quadcopter to image
-  the desired area. Many people use GPS for localizing quadcopter and navigating
-  it to the desired location. But GPS based mechanism will not work in indoor areas. 
-  Also, we cannot rely on GPS due to various factors such as spurious GPS
-  signals, GPS jammers, etc.
+  Inexpensive quadcopters like Parrot's ARDrone are agile and can do
+  several maneuvers swiftly. However, manually controlling a quadcopter to image large
+  planar regions smoothly by keeping a constant distance from the imaging plane
+  is very difficult because of the tendency of quadcopter to drift from its
+  desired position. Hence, there is a requirement of a mechanism for autonomous navigation of
+  quadcopter. One does not have to image the scene continuously while navigating
+  the quadcopter as too many pictures are redundant. We have to estimate the
+  optimal number of positions of the quadcopter from where it can take images,
+  even while ensuring that captured images encompass the scene.
   
   \item \textbf{Building a scale accurate 3D map of the environment in
-  real-time:} We need accurate 3D coordinates of the region to be imaged on the fly for
-  doing efficient path planning. Researchers generally use RGBD cameras such as
-  Kinect for getting a 3D map of the environment. But, due to payload
-  restriction as well as battery requirement, we may not be able to put such
-  cameras on top of a quadcopter. The Structure from Motion (SfM) techniques can
-  build such a 3D map but due to the real-time requirement, we cannot use such
-  techniques. Though Engel et al.~\cite{engel} have developed a method to
-  create a 3D map for camera-based navigation of a quadcopter, it is not precise
-  due to inaccuracies in scale. So, we need a
-  robust mechanism to build a scale accurate 3D map in real-time.
+  real-time:} A quadcopter has to be maneuvered along an estimated path such
+  that it will cover the input scene in minimum time. We require accurate
+  3D coordinates of the region to be imaged on the fly for doing efficient path
+  planning. Researchers generally use RGBD cameras such as the Microsoft
+  Kinect~\cite{Zhang:2012} for getting a 3D map of the environment. However,
+  due to payload restrictions as well as battery requirements, it is not
+  efficient to put such cameras on top of a quadcopter like ARDrone. Structure
+  from Motion (SfM) techniques can build such a 3D map, but due to the
+  real-time requirement, we cannot use such techniques. There are various
+  methods based on popular techniques such as Simultaneous Localization and
+  Mapping (SLAM) or Parallel Tracking and Mapping (PTAM) for creating a 3D map
+  of the environment. However, most of these methods, e.g.,~\cite{klein}, lack
+  the accuracy in scale estimation due to complete reliance on visual feedback,
+  resulting in an erroneous 3D map. Engel et al.~\cite{engel} have developed a
+  method which fuses IMU measurements with the PTAM measurements, to create a
+  3D map for camera-based navigation of a quadcopter. However, it is not
+  sufficiently precise for our purposes due to inaccuracies in scale.
   
   \item \textbf{Robust Detection of multiplanar bounded regions in real-time:} 
   Multiplanar imaging through quadcopter requires detection of multiplanar
   bounded regions in real-time. There are a few methods like
-  multiRANSAC~\cite{zuliani}, j-linkage~\cite{jlinkage},
-  t-linkage~\cite{tlinkage} in literature for detection of multiple models from
-  the input data.  But, these methods do not output boundaries of planar
-  regions. Also, these methods have not considered the validity of boundaries of
-  planar regions to  filter noisy points appropriately. As a result, such noisy
-  points get clustered into wrong models, extending boundaries of planar
-  regions incorrectly. Hence, there is a need for a method to accurately estimate
-  multiplanar bounded regions in real-time.
-  
+  multiRANSAC~\cite{zuliani}, J-linkage~\cite{jlinkage},
+  T-linkage~\cite{tlinkage} in the literature for detection of multiple planes
+  from the input data. These methods do not output the boundaries of planar
+  regions. They only output the estimated planes from the input 3D points using
+  geometric affinity of points towards individual planes. Also, these methods
+  have not considered the validity of boundaries of planar regions to remove
+  noisy points. As a result, such noisy points get clustered into wrong planes,
+  extending boundaries of planar regions incorrectly.
+  Figure~\ref{fig:jlinkageProblem} illustrates this problem. Points marked by
+  black oval are the result of erroneous estimations by PTAM, i.e., marked
+  points labeled as plane B actually belong to the plane A and vice-versa. 
+  Since their geometric affinity is towards opposite planes, they are labeled
+  incorrectly.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.98\linewidth]{figures/multiplanar/JlinkageProblem}
+\caption{Problem in J-linkage clustering. J-linkage doesn't use validity of plane
+boundaries to cluster points to correct planes. Points marked by black ovals
+are the result of erroneous estimations by PTAM. Since their geometric
+affinity is towards opposite planes, they are labeled incorrectly.}
+\label{fig:jlinkageProblem}
+\end{figure}
+
   \item \textbf{Identification of a quadcopter under motion:}
-  The movement of quadcopter like ARDrone is jerky due to its inexpensive
-  nature. This results in motion blur in images of quadcopters, which makes
-  tracking of quadcopter very challenging. Though we can put fiducials such as
-  ARTag on the quadcopter to keep the track, such fiducials are not detected
-  due to motion blur. Figure \ref{fig:ARTagBlur} demonstrates the problem in
-  detection of ARTag under motion blur. Figure \ref{fig:ARTagBlur} shows
-  that though ARTags get detected (indicated by green rectangles) in the absence of blur 
-  in captured images, but when there is significant amount of blur in the
-  captured images, it is not possible to detect ARTag. The reason behind this is
-  that detection of fiducials such as ARTag is based on the detection of
-  geometric features e.g., lines, corners, etc.
+  Imaging large multiplanar scenes using a single quadcopter is difficult 
+  due to the insufficient power available in the battery. Multiple 
+  quadcopters can be used in such scenarios to work in collaboration. Each
+  quadcopter requires to be distinguished. The movement of quadcopter like
+  ARDrone is quite jerky which results in motion blur in images of quadcopters.
+  It makes tracking of such quadcopters challenging. Normally, we can place
+  fiducials on the quadcopter to keep track. ARTag~\cite{Fiala05} is preferred
+  over other fiducials like ARToolkit~\cite{ARToolkit02}, PiTag~\cite{Pitag13},
+  etc. as the detection rate of ARTag is better than other existing fiducials.
+  However, none of these fiducials are detected in the presence of motion blur. Figure
+  \ref{fig:ARTagBlur} demonstrates the problem in detection of ARTag under
+  motion blur. Figure \ref{fig:ARTagBlur} (Left) shows that ARTags get detected
+  (indicated by green rectangles) in the absence of blur in captured images.
+  However, when there is a significant amount of blur, ARTags cannot be
+  detected (Figure \ref{fig:ARTagBlur} (Right)).
   
 \begin{figure}[h!]
 \centering
 \includegraphics[width=0.98\linewidth]{figures/fiducial/ARTagBlur}
 \caption[Problem of motion blur in ARTag]{Illustration of problem with ARTag.
 There are two ARTags in the scene.
-When there is no blur in the captured image(Left), both ARTags get detected
-(indicated by green rectangle). But, when there is motion blur in the captured
-image(Right), none of the ARTags get detected.}
+When there is no blur in the captured image (Left), both ARTags are recognized
+(indicated by green rectangle). When there is motion blur in the captured
+image (Right), neither of the two tags are recognized.}
 \label{fig:ARTagBlur}
 \end{figure}
 
