@@ -206,10 +206,12 @@ The challenges which make our problem interesting to solve are as follows.
 \centering
 \includegraphics[width=0.98\linewidth]{figures/vacantSpaces}
 \caption[Jigsaw Puzzle as a mosaicing problem]{Jigsaw Puzzle as a mosaicing
-problem. Individual pieces (Left) of a jigsaw puzzle can be thought of constituent images of mosaic. Due to featureless
-regions belonging to the ocean (shown in Middle), one may find it difficult to join
-``Americas'' with remaining continents as shown in (Right). We have to use
-our knowledge about geography to complete the puzzle.}
+problem. Individual pieces (Left) of a jigsaw puzzle can be thought of
+constituent images of mosaic. Due to featureless regions corresponding to seas,
+(shown in Middle), it is problematic to join ``Americas'' (Right) with the
+remaining continents. We have to use our knowledge about geography to complete
+the puzzle. Purely from a matching perspective, Americas could well come to the
+left or right in this puzzle.}
 \label{fig:vacantSpaces}
 \end{figure}
   
@@ -369,23 +371,23 @@ image (Right), neither of the two tags are recognized.}
 \centering
 \includegraphics[width=0.98\linewidth]{figures/contributions2}
 \caption[Contributions]{Our work involves techniques required for imaging
-multiplanar surfaces through one or more quadcopters. (a) Shows mosaicing of a scene containing
+multiplanar surfaces through one or more quadcopters. (a) Mosaicing of a scene containing
 vacant spaces. Two exhibits on a wall are separated by  a large vacant space
-which makes homography based stitching methods ineffective. (b) Shows imaging
+which makes homography based stitching methods ineffective. (b) Imaging
 of a multiplanar scene through quadcopter. We imaged a multiplanar scene in such
 a way that content on each plane is imaged with an orthographic view. Later we
 combined a mosaic from each planar bounded region to get the  unrolled view of
-an overall scene. (c) Shows our blur-resilient fiducials being recognized in the
+an overall scene. (c) Blur-resilient fiducials being detected in the
 presence of motion blur, even from oblique angles.}
 \label{fig:contributions}
 \end{figure}
 
 As shown in Figure \ref{fig:contributions}, we have developed an integrated solution to
 explore scenes spread over single or multiplanar scenes through quadcopter. To
-the best of our knowledge, we are the first to use quadcopter for:
+the best of our knowledge, we are the first 
 \begin{itemize}
-  \item Mosaicing scenes with vacant spaces  
-  \item Imaging scenes spread over multiple planes autonomously   
+  \item To mosaic scenes with vacant spaces using a quadcopter  
+  \item To image scenes spread over multiple planes autonomously using a quadcopter  
 \end{itemize}
 
 Specific contributions made to achieve this goal and to address the above
@@ -407,7 +409,7 @@ mentioned challenges are:\\
   \end{figure}
   
   We propose to solve the vacant space problem by using additional information
-  available from an inexpensive quadcopter. Quadcopter contains an inertial
+  available from an inexpensive quadcopter.  Quadcopters contain an inertial
 measurement unit (IMU) that has positional information. We use the positional
 information from IMU primarily for two purposes:
 \begin{enumerate}
@@ -430,17 +432,17 @@ swift movements.  Complementing the IMU with information gleaned from
 vision algorithms, however, may be a useful practice.
 
 The method adopted is pictorially depicted in the overview shown in
-Figure~\ref{fig:vaccantSpaces_workflow}.  In brief, we systematically acquire a 
-video of the scene, reduce the input video to a manageable number of images, and finally, 
-combine the images acquired from different positions into a mosaic. 
+Figure~\ref{fig:vaccantSpaces_workflow}.  In brief, we systematically acquire a
+video of the scene, reduce the input video to a manageable number of images,
+and finally, combine the images acquired from different positions into a mosaic. 
 
 The result on a sample scene is shown in Figure~\ref{fig:vacantSpaces_result}.
 In this experiment, the input stream had about 9000 input images.  Our selection algorithm
  pruned the video into $N=13$ images. A sample of the selected images are seen
  in Figure~\ref{fig:vacantSpaces_result}(a).  The scene as captured by a
  smartphone can also be seen, as well as the outputs of the state of the art
- stitchers, viz., AutoStitch\cite{autostitch} and Adobe
- PhotoShop\cite{photoshop}. Note that AutoStitch\cite{autostitch} is only able
+ stitchers, viz., AutoStitch~\cite{autostitch} and Adobe
+ PhotoShop~\cite{photoshop}. Note that AutoStitch~\cite{autostitch} is only able
  to stitch the upper half of the scene.  Our result
  Figure~\ref{fig:vacantSpaces_result}(e) clearly stands out in comparison.\\
   
@@ -448,15 +450,14 @@ In this experiment, the input stream had about 9000 input images.  Our selection
 	\centering
 	\includegraphics[width=0.98\linewidth]{figures/vacantSpaces/indoor_results}
 	\caption[Result: Cars]{ (a) Pruned images from the quadcopter video using our
-  saliency algorithm of (b) an indoor scene. This long range photograph
+  saliency algorithm of (b) an indoor scene. This long-range photograph
   has been captured separately by a smartphone camera only for the
   context. Notice a significant vacant space in the imagery.  (c)
-  Output of AutoStitch -- only the upper half of the scene is output.
-  (d) Output of Adobe Photoshop CS6 -- the vacant space posed a problem to the
-  feature matching algorithm, so instead of a mosaic, individual
+  The output of AutoStitch -- only the upper half of the scene is output.
+  (d) The output of Adobe Photoshop CS6 -- the vacant space posed a problem to
+  the feature matching algorithm, so instead of a mosaic, individual
   pieces were output as mini-panoramas (e) Our output on the selected
-  images. We are able to present the scene in high fidelity in an
-  orthographic view.}	
+  images. We can present the scene in high fidelity in an orthographic view.}	
 	\label{fig:vacantSpaces_result}
 	\end{figure}
   
@@ -465,19 +466,19 @@ In this experiment, the input stream had about 9000 input images.  Our selection
 \centering
 \includegraphics[width=0.98\linewidth]{figures/multiplanar/workflow}
 \caption[Overflow of autonomous multiplanar imaging through quadcopter]{Overview
-of Multiplanar Imaging through quadcopter:
-(a) An input Scene to be imaged.
-(b) Feature points in the scene are found and their 3D positions are estimated
-using scale aware PTAM \cite{Engel12}. (c) Multiple planar bounded regions are
+of multiplanar imaging through quadcopter:
+(a) An input scene to be imaged.
+(b) Feature points in the scene are found, and their 3D positions are estimated
+using scale aware PTAM \cite{engel}. (c) Multiple planar bounded regions are
 estimated using our algorithm. (d) For each bounded planar region, 3D camera
-positions are calculated and overall path planning is done. (e) Videos are
+positions are calculated, and overall path planning is done. (e) Videos are
 captured at each target position. From each captured video, the appropriate
-frame is found. (f) Individual mosaics are joined together to get final output.}
+frame is found. (f) Individual mosaics are joined to get the final output.}
 \label{fig:multiplanar_workflow}
 \end{figure}
 
-The mosaicing algorithms can mosaic only if the scene lies on a single planar
-surface. But the real world is made of multiplanar as well as curved surfaces.
+Homography-based mosaicing algorithms can mosaic only if the scene lies on a single planar
+surface. But the real world is made-up of multiplanar as well as curved surfaces.
 In fact, we have many circumstances where the input scene is spread over
 multiple planes. In such cases, we would like to image each planar region
 orthographically and then `unroll' the whole scene by joining the individual
@@ -485,38 +486,41 @@ mosaics so that we get the output mosaic of the input scene as if it is present
 on a single plane.
 
 The method adopted is pictorially depicted in the overview shown in
-Figure~\ref{fig:multiplanar_workflow}. In brief, we probe the input scene through a quadcopter, calculate the 3D positions of feature points
-using PTAM based method\cite{engel}. Later we use our algorithm, an improvement
-over j-linkage\cite{jlinkage} to detect multiplanar bounded regions from the area
+Figure~\ref{fig:multiplanar_workflow}. In brief, we probe the input scene
+through a quadcopter, calculate the 3D positions of feature points using PTAM
+based method~\cite{engel}. Later, we use our algorithm, an improvement over
+J-linkage~\cite{jlinkage} to detect multiplanar bounded regions from the area
 marked by the user through our user interface. Path planning is done for each
-planar bounded region to find out the camera positions in such a way
-that images captured from those positions encompass the scene in an optimal manner.
+planar bounded region to determine the camera positions in such a way that
+images captured from those positions encompass the scene in an optimal manner.
 The quadcopter is autonomously maneuvered along the estimated path and videos
 are captured at target points. For each planar bounded region, the appropriate
 frame from each video is found and then given to a mosaicing algorithm. 
-Finally, all mosaics are joined together to get a full unrolled view.
+Finally, all mosaics are joined to get a full unrolled view.
 
 Our experiments are done on various setups covering multiple planes.
 In one such experiment, paintings were arranged in the convex
 fashion as shown in Figure~\ref{fig:multiplanar_result} (Top-Left). We have
 selected the area to be imaged as shown in Figure \ref{fig:multiplanar_result}
-(Top-Right). In the path planning stage, overall 30 (9 from the left plane, 12 from the middle
-and 9 from the right plane) positions to cover full region are estimated.  Images
-captured from those positions are mosaiced using our algorithm to get the final
-mosaicing output as shown in the Figure~\ref{fig:multiplanar_result} (Bottom).
+(Top-Right). In the path planning stage, overall 30 (9 from the left plane, 12
+from the middle plane, and 9 from the right plane) positions to cover full
+region are estimated.  Images captured from those positions are mosaiced using our
+algorithm to get the final mosaicing output as shown in the
+Figure~\ref{fig:multiplanar_result} (Bottom).
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=0.98\linewidth]{figures/multiplanar/convexResult}
 	\caption[Result: Imaging Convex Surface ]{The exhibition of 
-	temple paintings arranged in convex fashion as shown in the long range photograph (top-left). Note that we
-cannot cover all paintings with enough details simultaneously. We have selected
-the area to be imaged as shown in GUI for area selection (top-right).
-Green quadrilateral shows the user selected area while blue, violet and magenta
-colored quadrilaterals represent the multiple planar bounded regions
-estimated by our algorithm. In the path planning stage, overall 30 (9 from left
-plane, 12 from middle and 9 from the right plane) positions were estimated to cover
-the full region. Images captured from the estimated positions are mosaiced using
-our algorithm to get the final mosaicing output as shown in the bottom image.}	
+	temple paintings arranged in convex fashion as shown in the long-range
+	photograph (top-left). Note that we cannot cover all paintings with enough
+	details simultaneously. We have selected the area to be imaged as shown in GUI
+	for area selection (top-right). Green quadrilateral shows the user selected
+	area while blue, violet and magenta colored quadrilaterals represent the
+	multiple planar bounded regions estimated by our algorithm. In the path
+	planning stage, overall 30 (9 from the left plane, 12 from the middle plane,
+	and 9 from the right plane) positions are estimated to cover the full region.
+	Images captured from the estimated positions are mosaiced using our algorithm to get
+	the final mosaicing output as shown in the bottom image.}
 	\label{fig:multiplanar_result}
 \end{figure}
 	
@@ -528,22 +532,21 @@ our algorithm to get the final mosaicing output as shown in the bottom image.}
 \caption[Overall Workflow of blur resilient fiducial recognition algorithm]{An
 overview of our fiducial recognition algorithm.
     The four step process includes (Step 1) Filtering,
-    (Step 2) Component clustering, (Step 3) Dominant direction determination
+    (Step 2) Component clustering, (Step 3) Dominant direction determination,
     and (Step 4) Classification using prior training data.}
  \label{fig:fiducial_workflow}
 \end{figure}
 
 A single quadcopter is not sufficient for imaging large multiplanar scenes due
-to battery constraints. Instead, we may use multiple quadcopters in
+to energy constraints. Instead, we may use multiple quadcopters in
 collaboration for imaging multiplanar scenes. In such cases, we have to identify
 each quadcopter uniquely for accurate collaboration among multiple quadcopters. 
 
 Generally, fiducial markers such as ARTag~\cite{Fiala05} are used to identify
-objects in the environment. A problem with existing fiducials is that low-cost
-quadcopters often exhibit very quick and erratic physical movements that result
-in motion blur which is evident in the images captured from the quadcopter's
-onboard camera. This motion blur has an adverse effect on the recognition of fiducial
-markers. This can be seen in Figure~\ref{fig:fiducials_result} (Top) where the
+objects in the environment.The low-cost quadcopters often exhibit very quick and 
+erratic physical movements that result in motion blur which is evident in the images 
+captured from the quadcopter's onboard camera. This motion blur has an adverse effect
+on the recognition of fiducial markers. This can be seen in Figure~\ref{fig:fiducials_result} (Top) where the
 ARTag fiducial cannot be recognized due to motion blur. This is not too
 surprising as most existing fiducials are not designed to handle motion blur.
 
@@ -567,9 +570,9 @@ recognition. Our recognition algorithm has four steps. In Step~1, we apply a Gab
 filter on the image to isolate the potential locations of the pattern.  In
 Step~2, we find clusters of patches in the Gabor output.  In Step~3, we perform
 the Principal Component Analysis (PCA) on each cluster to find the dominant
-direction unaffected by the blur.  Finally in Step~4, based on the
-direction detected, we extract the intensity profile of the pattern
-and classify the fiducial.
+direction unaffected by the blur.  Finally in Step~4, based on the direction
+detected, we extract the intensity profile of the pattern and classify the
+fiducial.
 
 \begin{figure}
 \begin{subfigure}[b]{0.24\textwidth}
@@ -609,7 +612,7 @@ of ARTags is around 60\%. }
 \section{Organization of the thesis}
 The remainder of the thesis is organized as follows:\\
 
-\noindent \textbf{Chapter 2} explains the details of a quadcopter focusing on
+\noindent \textbf{Chapter 2} explains the details of a quadcopter focussing on
 control and navigation aspects. Here, we also present previously published work
 in the area of mosaicing, autonomous navigation of quadcopter as well as
 fiducials. We use this chapter as an opportunity to establish and contrast the
