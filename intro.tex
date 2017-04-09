@@ -525,8 +525,8 @@ our algorithm to get the final mosaicing output as shown in the bottom image.}
 \begin{figure}[h!]
 \centering
 \includegraphics[width=0.98\linewidth]{figures/fiducial/overall_flow}
-\caption[Overall Workflow of blur resilient fiducial detection algorithm]{An
-overview of our fiducial detection algorithm.
+\caption[Overall Workflow of blur resilient fiducial recognition algorithm]{An
+overview of our fiducial recognition algorithm.
     The four step process includes (Step 1) Filtering,
     (Step 2) Component clustering, (Step 3) Dominant direction determination
     and (Step 4) Classification using prior training data.}
@@ -563,7 +563,7 @@ perpendicular to the direction of motion. This allows the signature of the
 fiducial to remain intact in any direction.
 
 Figure~\ref{fig:fiducial_workflow} shows the process involved in fiducial
-detection. Our detection algorithm has four steps. In Step~1, we apply a Gabor
+recognition. Our recognition algorithm has four steps. In Step~1, we apply a Gabor
 filter on the image to isolate the potential locations of the pattern.  In
 Step~2, we find clusters of patches in the Gabor output.  In Step~3, we perform
 the Principal Component Analysis (PCA) on each cluster to find the dominant
@@ -601,7 +601,7 @@ and classify the fiducial.
   revolving around our setup. 
 \textbf{Top} ARTags are not recognized, shown by an absence of green rectangles.
 \textbf{Bottom} In similar conditions, proposed fiducials are successfully
-recognized. The overall detection rate of proposed fiducials is 90\% while that
+recognized. The overall recognition rate of proposed fiducials is 90\% while that
 of ARTags is around 60\%. }
 \label{fig:fiducials_result}
 \end{figure}

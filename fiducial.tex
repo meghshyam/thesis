@@ -13,7 +13,7 @@ placed~\cite{Bosnak:2012,Lim09,Klopschitz:2007}
  in the environment to provide additional information that
 serves for ground-truth positional measurements.
 In order to be effective, fiducial markers (or simply, fiducials) need
-to be easily detected in the scene. A variety of fiducials have
+to be easily recognized in the scene. A variety of fiducials have
 been proposed~\cite{NaimarkF02,ARToolkit02,Fiala05,Pitag13,runetag11}
 in the literature.  These take the form of binary codes arranged into
 rectangular grids~\cite{ARToolkit02,Fiala05} or other geometric
@@ -80,7 +80,7 @@ resistant marker, especially in quadcopter settings.
 
 We begin by first motivating the need for a new blur resistant
 fiducial by examining the performance of prior fiducials under motion
-blur.  After this, we detail our design as well as the detection
+blur.  After this, we detail our design as well as the recognition
 algorithm used to find the fiducial in an image, or a video sequence.
 
 \subsection{Prior Fiducials Under Motion Blur}\label{sec:blurtest}
@@ -128,7 +128,7 @@ blur, while at 35 units, the ARTag's recognition rate drops to less than
 ARTag fiducials blurred with various blur scales at different orientations. \textbf{Bottom
     Table:} Recognition rate (in percent). We see that the recognition
   rates for both the tags are significantly reduced. For severe blur,
-  detection fails.}
+  recognition fails.}
 \label{fig:artag_pitag}
 \end{figure}
 
@@ -161,7 +161,7 @@ rings and we end up with eight different patterns.
 Figure~\ref{fig:fiducials} shows two-bit binary fiducials.
 
 
-Our fiducial detection strategy is different from
+Our fiducial recognition strategy is different from
 \cite{NaimarkF02,Pitag13} and works under significant amounts of blur.
 As previously mentioned, our approach works under the observation that
 the motion blur for the quadcopter's camera can be well modeled as
@@ -187,8 +187,8 @@ various motion directions.
 \subsection{Detection Algorithm}
 
 Figure~\ref{fig:overall_flow} shows the process involved in fiducial
-detection. We give a brief overview of our algorithm here with each
-step described in detail afterward.  Our detection algorithm has four
+recognition. We give a brief overview of our algorithm here with each
+step described in detail afterward.  Our recognition algorithm has four
 steps. In Step~1, we apply a Gabor filter on the image to isolate the
 potential locations of the pattern.  In Step~2, we find clusters of
 patches in the Gabor output.  In Step~3, we perform Principal
@@ -301,7 +301,7 @@ Our system has been tested on several image sequences captured from an
 AR Drone quadcopter.  The drone was flown indoors looking at patterns
 attached to various walls. Each image sequence contains frames of
 different fiducials. Some sample outputs for each fiducial
-is shown in Figure~\ref{fig:out_outputs}. Our detection process takes
+is shown in Figure~\ref{fig:out_outputs}. Our recognition process takes
 around 0.3 seconds which translates to slightly over three frames per
 second.
 
@@ -313,14 +313,14 @@ second.
 
   \includegraphics[width=0.4\linewidth]{figures/fiducial/output_10.jpg}
   \includegraphics[width=0.4\linewidth]{figures/fiducial/output_11.jpg}
-  \caption[Output of our fiducial detection algorithm]{Output of our fiducial
-  detection algorithm on sample images. The class label shown is the decimal
+  \caption[Output of our fiducial recognition algorithm]{Output of our fiducial
+  recognition algorithm on sample images. The class label shown is the decimal
   equivalent of the binary coded fiducial.}
   \label{fig:out_outputs}
 \end{figure}
 
 Our system has also been tested on images containing multiple fiducial
-patterns in the same frame. Our algorithm successfully detected
+patterns in the same frame. Our algorithm successfully recognized
 all fiducials as well as correctly classified them as shown in
 Figure \ref{fig:output_all}.
 
@@ -329,7 +329,7 @@ Figure \ref{fig:output_all}.
   \includegraphics[width=.45\linewidth]{figures/fiducial/output_all_2.jpg}
   \includegraphics[width=.45\linewidth]{figures/fiducial/output_test_all1.jpg}
   \caption[Result: Multiple Fiducials Detection]{Multiple fiducials in the same
-  frame can be efficiently detected. }
+  frame can be efficiently recognized. }
   \label{fig:output_all}
 \end{figure}
 
@@ -356,7 +356,7 @@ blur scales.
 \end{figure}
 
 Qualitatively, we see in Figure~\ref{fig:blur_maximum} that despite of
-even more blur than earlier described (50 units or more), detection is
+even more blur than earlier described (50 units or more), recognition is
 still feasible and practical.  Quantitatively, the comparison of
 recognition rate is shown in Figure~\ref{fig:recognition_rate}.
 Even under more severe blur, of 65 pixels, the algorithm is
@@ -380,7 +380,7 @@ blur pattern can be localized under blur.  To do this, we have
 simulated data along different blur orientations for all patterns over
 eight different blur scales (30 to 65 with the step size of 5). Values for
 the localization of the pattern ``00'' after blur with 50 pixels is
-omitted since the pattern cannot be detected. From
+omitted since the pattern cannot be recognized. From
 Table~\ref{tab:blur_angle_center}, it can be clearly seen that the 
 mean error in locating center by our algorithm is within approximate 3
 pixels, or 3\% of the diameter of the fiducial.
@@ -461,7 +461,7 @@ wall. The comparison of the recognition
 rate is shown in Table~\ref{tab:recognition_accuracy}. Recognition
 rate of our fiducials ranges from 86.5\% to 94.1\%, while the ARTag is
 60.3\% to 65.6\%.  Classification accuracy of all fiducials (ARTag as
-well as ours) was approximately 100\%, i.e., when tags were detected
+well as ours) was approximately 100\%, i.e., when tags were recognized
 they were the correct fiducials and not other objects in the scene.
 
 \begin{table}[t!]
@@ -488,7 +488,7 @@ In another setup, we arranged our fiducials on four sides of a box and
 revolved the quadcopter around the box (See  \cite{video}).
 Later, we repeated the process by replacing our fiducial by ARTags. Figure~\ref{fig:setup} shows some
 frames from this sequence as well as the performance of both
-fiducials. The overall detection rate of our tags is 90\% while that
+fiducials. The overall recognition rate of our tags is 90\% while that
 of ARTags is only around 60\%.
 
 \begin{figure*}[hb!]
@@ -528,11 +528,11 @@ of ARTags is only around 60\%.
 \caption[Comparison of ARTag and our fiducial when quadcopter is
   revolving around our setup]{Comparison of ARTag and our fiducial when quadcopter is
   revolving around our setup. 
-\textbf{Top} ARTags are not detected, shown by an absence of green rectangles. \textbf{Middle} In
+\textbf{Top} ARTags are not recognized, shown by an absence of green rectangles. \textbf{Middle} In
 similar conditions, proposed fiducials are successfully
-detected. The overall detection rate of proposed
+recognized. The overall recognition rate of proposed
 fiducials is 90\% while that of ARTags is around 60\%. 
-\textbf{Bottom Rows} Time view of detection. ARTag is ``choppy'' with
+\textbf{Bottom Rows} Time view of recognition. ARTag is ``choppy'' with
 frequent losses, while the proposed fiducial (extreme bottom) is
 ``up'' almost all the 
 time.}
@@ -553,7 +553,7 @@ of fiducial does not change too much in successive frames. Also, it
 can be seen that once BLUT loses track of the fiducial, it is not
 able to recover. Since our approach detects the code in each frame,
 large changes in the pattern's position is not an issue.  Our fiducial
-detection results are also shown in
+recognition results are also shown in
 Figure~\ref{fig:BLUT_compare_00}--\ref{fig:BLUT_compare_11}.
 
 We have also found that even if we reset the BLUT tracker after it
@@ -740,9 +740,9 @@ tasks efficiently.
   \includegraphics[width=\linewidth]{figures/fiducial/fiducialOnDrone}
   \caption[Fiducials on Quadcopter]{Identification of sides of quadcopter using
   fiducials. (a) shows our distinct fiducials put on two sides of
-  quadcopter.(b) shows fiducial with binary code ``11"( class 3) being detected
+  quadcopter.(b) shows fiducial with binary code ``11"( class 3) being recognized
   from one side while (c) shows fiducial with binary code ``10"(class 2) being
-  detected from other side.}
+  recognized from other side.}
   \label{fig:fiducialOnDrone}
 \end{figure}
 
@@ -752,7 +752,7 @@ quadcopter itself. We have put our two-bit fiducials on two sides of the
 quadcopter as shown in Figure~\ref{fig:fiducialOnDrone}(a). 
 Currently, we have used another camera to capture this moving quadcopter.
 However, in practice, we can use a quadcopter to capture another quadcopter.
-Figure~\ref{fig:fiducialOnDrone}(b) and (c) shows the detection of
+Figure~\ref{fig:fiducialOnDrone}(b) and (c) shows the recognition of
 and classification of fiducials from two sides. As each fiducial carry a
 unique code, we can accurately tell that which side of the quadcopter we are
 looking at.
@@ -771,19 +771,19 @@ real-time performance.  As such, we envision the method will be used in an
 offline manner for performing analysis of flight paths. Code profiling revealed
 that the Gabor filtering along the eight directions takes most of the time
 (0.03 -- 0.04 seconds per orientation).  Either an improved Gabor filter scheme
-is required or an alternative strategy for detection is required.
+is required or an alternative strategy for recognition is required.
 %\noindent\textbf{False Negatives}~~
 
-We found that sometimes our detection algorithm fails to recognize the
+We found that sometimes our recognition algorithm fails to recognize the
 ``00'' fiducial, when there is a severe blur.  This is because when there
 is too much blur, the innermost ring's response in the Gabor output is
-too low and not detected properly.  This problem can be resolved by
+too low and not recognized properly.  This problem can be resolved by
 increasing the radius of the innermost ring to reduce the effect of blur
 on the innermost ring.
 %\noindent\textbf{Pose Estimation}~~
 
 We note that other markers are able to give full pose estimation after
-detection.  However, we are only able to reliably detect the center
+recognition.  However, we are only able to reliably detect the center
 point and therefore cannot estimate pose.  Of course, if four markers
 were used in a known order, pose could be estimated. The current
 resolution of the onboard camera is a significant  hurdle to clear before we
@@ -801,7 +801,7 @@ further research.
 \section{Concluding remarks}
 Quadcopters are subject to quick and unstable motions that can cause
 significant motion blur in the captured images. This severely affects
-the detection rate of existing fiducials. We proposed the
+the recognition rate of existing fiducials. We proposed the
 design of a fiducial that is resistant to motion blur. Our design of
 contrasting concentric rings is based on the observation that the
 direction perpendicular to the motion blur direction will be
