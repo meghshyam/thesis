@@ -45,8 +45,8 @@ according to their positions, we just need to match images which are present in
 the 8-neighborhood of a given image, and adjust for overlap, scale, and rotational data.
 If there are vacant spaces in an input scene, the matcher has no way to connect pieces, and we  get multiple mini-panoramas representing disconnected parts of the scene. The mini-panoramas are then joined together appropriately with the help of positional information to form the super-panorama. The efficacy of our approach is demonstrated on a number of input sequences that cannot be mosaiced by existing methods.
 
-The above approach results in successful mosaicing an input scene spread over a \emph{single} planar
-surface, regardless of the presence of vacant spaces, or repeated features. In the real world, we expect to  encounter multiple piecewise planar surfaces, or even curved surfaces. Manually navigating the quadcopter around such large surfaces for the purpose of capturing a video footage is 
+The above approach results in successful mosaicing of an input scene spread over
+a \emph{single} planar surface, regardless of the presence of vacant spaces, or repeated features. In the real world, we expect to  encounter multiple piecewise planar surfaces, or even curved surfaces. Manually navigating the quadcopter around such large surfaces for the purpose of capturing a video footage is 
 very tedious. We present a method for autonomous
 navigation of a quadcopter for imaging large multiplanar surfaces. The method
 uses the Parallel Tracking and Mapping (PTAM) based approach to create an 
@@ -75,7 +75,8 @@ tracking objects in this environment.
 %help in collaboration between them to image large multiplanar surfaces.
 At the same time, quadcopters are subject to quick and unstable motions that can cause
 significant motion blur in the captured images. This severely affects the
-detection rate of existing fiducials.  We propose the design of a fiducial that is resilient to motion blur. 
+recognition rate of existing fiducials.  We propose the design of a fiducial
+that is resilient to motion blur.
 %The design of contrasting concentric rings is based on the observation that the
 %direction perpendicular to the motion blur direction will be unaffected by the
 %blur and therefore still be recognizable. 

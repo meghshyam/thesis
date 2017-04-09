@@ -124,7 +124,7 @@ significant amount of motion blur is introduced. If such fiducials are
 placed on non-stationery objects, they do not get recognized because
 recognition of these fiducials depends on the detection of geometric
 patterns such as lines, corners, etc.  Hence, there is a necessity of
-developing blur resilient fiducials which can be detected robustly
+developing blur resilient fiducials which can be recognized robustly
 when placed on swift moving objects such as quadcopters.
 
 \section*{Problem Statement}
@@ -144,7 +144,7 @@ quadcopters into the following steps:
   		\item Path planning for imaging each planar region in a multiplanar scene.
 	\end{enumerate}
   \item Unrolling scenes spread over multiple planes.
-  \item Devising a mechanism for robust detection of quadcopters under swift
+  \item Devising a mechanism for robust recognition of quadcopters under swift
   motion.
 \end{enumerate}
 Each of these steps is non-trivial and challenging as explained in
@@ -307,7 +307,7 @@ images.}
   3D map for camera-based navigation of a quadcopter. However, it is not
   sufficiently precise for our purposes due to inaccuracies in scale.
   
-  \item \textbf{Robust Detection of multiplanar bounded regions in real-time:} 
+  \item \textbf{Robust detection of multiplanar bounded regions in real-time:} 
   Multiplanar imaging through quadcopter requires detection of multiplanar
   bounded regions in real-time. There are a few methods like
   multiRANSAC~\cite{zuliani}, J-linkage~\cite{jlinkage},
@@ -343,13 +343,13 @@ affinity is towards opposite planes, they are labeled incorrectly.}
   It makes tracking of such quadcopters challenging. Normally, we can place
   fiducials on the quadcopter to keep track. ARTag~\cite{Fiala05} is preferred
   over other fiducials like ARToolkit~\cite{ARToolkit02}, PiTag~\cite{Pitag13},
-  etc. as the detection rate of ARTag is better than other existing fiducials.
-  However, none of these fiducials are detected in the presence of motion blur. Figure
-  \ref{fig:ARTagBlur} demonstrates the problem in detection of ARTag under
-  motion blur. Figure \ref{fig:ARTagBlur} (Left) shows that ARTags get detected
-  (indicated by green rectangles) in the absence of blur in captured images.
-  However, when there is a significant amount of blur, ARTags cannot be
-  detected (Figure \ref{fig:ARTagBlur} (Right)).
+  etc. as the recognition rate of ARTag is better than other existing fiducials.
+  However, none of these fiducials are recognized in the presence of motion
+  blur. Figure \ref{fig:ARTagBlur} demonstrates the problem in recognition of
+  ARTag under motion blur. Figure \ref{fig:ARTagBlur} (Left) shows that ARTags
+  get recognized (indicated by green rectangles) in the absence of blur in
+  captured images. However, when there is a significant amount of blur, ARTags cannot be
+  recognized (Figure \ref{fig:ARTagBlur} (Right)).
   
 \begin{figure}[h!]
 \centering
@@ -375,7 +375,7 @@ which makes homography based stitching methods ineffective. (b) Shows imaging
 of a multiplanar scene through quadcopter. We imaged a multiplanar scene in such
 a way that content on each plane is imaged with an orthographic view. Later we
 combined a mosaic from each planar bounded region to get the  unrolled view of
-an overall scene. (c) Shows our blur-resilient fiducials being detected in the
+an overall scene. (c) Shows our blur-resilient fiducials being recognized in the
 presence of motion blur, even from oblique angles.}
 \label{fig:contributions}
 \end{figure}
@@ -407,7 +407,7 @@ mentioned challenges are:\\
   \end{figure}
   
   We propose to solve the vacant space problem by using additional information
-  available from an inexpensive quadcopter.  Quadcopter contains an inertial
+  available from an inexpensive quadcopter. Quadcopter contains an inertial
 measurement unit (IMU) that has positional information. We use the positional
 information from IMU primarily for two purposes:
 \begin{enumerate}
@@ -430,10 +430,9 @@ swift movements.  Complementing the IMU with information gleaned from
 vision algorithms, however, may be a useful practice.
 
 The method adopted is pictorially depicted in the overview shown in
-Figure~\ref{fig:vaccantSpaces_workflow}.  In
-brief, we systematically acquire a video of the scene, reduce the
-input video to a manageable number of images, and finally, combine the
-images acquired from different positions into a mosaic. 
+Figure~\ref{fig:vaccantSpaces_workflow}.  In brief, we systematically acquire a 
+video of the scene, reduce the input video to a manageable number of images, and finally, 
+combine the images acquired from different positions into a mosaic. 
 
 The result on a sample scene is shown in Figure~\ref{fig:vacantSpaces_result}.
 In this experiment, the input stream had about 9000 input images.  Our selection algorithm
@@ -461,7 +460,7 @@ In this experiment, the input stream had about 9000 input images.  Our selection
 	\label{fig:vacantSpaces_result}
 	\end{figure}
   
-\subsection{Autonomous Multiplanar Imaging through quadcopter}
+\subsection{Autonomous Multiplanar Imaging through Quadcopter}
 \begin{figure}[h!]
 \centering
 \includegraphics[width=0.98\linewidth]{figures/multiplanar/workflow}
@@ -600,17 +599,17 @@ and classify the fiducial.
 \caption[Comparison of ARTag and our fiducial when quadcopter is
   revolving around our setup]{Comparison of ARTag and our fiducial when quadcopter is
   revolving around our setup. 
-\textbf{Top} ARTags are not detected, shown by an absence of green rectangles.
+\textbf{Top} ARTags are not recognized, shown by an absence of green rectangles.
 \textbf{Bottom} In similar conditions, proposed fiducials are successfully
-detected. The overall detection rate of proposed fiducials is 90\% while that of
-ARTags is around 60\%. }
+recognized. The overall detection rate of proposed fiducials is 90\% while that
+of ARTags is around 60\%. }
 \label{fig:fiducials_result}
 \end{figure}
 	
 \section{Organization of the thesis}
 The remainder of the thesis is organized as follows:\\
 
-\noindent \textbf{Chapter 2} explains the details of a quadcopter focussing on
+\noindent \textbf{Chapter 2} explains the details of a quadcopter focusing on
 control and navigation aspects. Here, we also present previously published work
 in the area of mosaicing, autonomous navigation of quadcopter as well as
 fiducials. We use this chapter as an opportunity to establish and contrast the
@@ -630,7 +629,7 @@ are addressed.\\
 
 \noindent \textbf{Chapter 5} elaborates on our design of blur
 resilient fiducial for identification of objects under a heavy motion blur. We
-have also proposed algorithm for robust detection of our blur resilient
+have also proposed algorithm for robust recognition of our blur resilient
 fiducial in this chapter.\\
  
  \noindent \textbf{Chapter 6} concludes the thesis by summarizing our
