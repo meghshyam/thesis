@@ -196,7 +196,7 @@ When I had started work on quadcopters (in mid-2013), Parrot's Bebop was not
 available. Hence, I have used Parrot's ARDrone 2.0 for my research work
 presented in this thesis.
 
-\section*{Challenges}
+\section{Challenges}
 \label{sec:challenges}
 The challenges which make our problem interesting to solve are as follows.
 
@@ -215,35 +215,37 @@ left or right in this puzzle.}
 \label{fig:vacantSpaces}
 \end{figure}
   
-  \item \textbf{Vacant spaces and regions with confusing features:}
-    Mosaicing a scene is similar to solving a jigsaw puzzle like the one shown in
+  \item \textbf{Vacant spaces and regions with confusing features:}  
+  Mosaicing a scene is similar to solving a jigsaw puzzle like the one shown in
   Figure~\ref{fig:vacantSpaces}. Here, individual pieces of the puzzle can be
   thought of as constituent images in a mosaic. We have to match
   pieces and join them. This is similar to the stitching algorithms
   which find matches in two images for estimating the relative position of one
   image with respect to another image. Normally, pieces can be placed at their
-  correct positions by matching a color, texture, as wells as a shape on the piece,
-  e.g., if there is a red colored piece, we can consider only other red
+  correct positions by matching a color, texture, as well as a shape on the
+  piece, e.g., if there is a red colored piece, we can consider only other red
   colored pieces whose boundaries match with the first piece. The blank
   pieces representing the seas make such puzzles hard to solve. While solving
   jigsaw puzzle containing blank pieces, we could build the parts of the
-  puzzle, e.g., ``Americas" and rest of the world as shown in
-  Figure~\ref{fig:vacantSpaces}. However, we cannot place these parts at
+  puzzle having features, e.g., ``Americas" and rest of the world as
+  shown in Figure~\ref{fig:vacantSpaces}. However, we cannot place these parts at
   their respective positions as we cannot match these parts with blank
   pieces to complete the puzzle. Here, we have to use additional positional
   information (e.g., geography in the puzzle shown in
   Figure~\ref{fig:vacantSpaces}) to join different parts separated by
-  vacant spaces. In general, images containing very less or no features are
-  difficult to match.
+  vacant spaces. 
 
-  The standard mosaicing method uses feature matching algorithms for
-  estimating the homography between two images. Feature matching algorithms
-  require detection of sufficient features in both images. However, scenes like
-  Figure~\ref{fig:vacantSpacesExample}(left) contain large regions with vacant
-  spaces. Such regions result in very few (or almost zero) features which pose
-  a problem for stitching images containing such regions. The output (shown in
-  Figure~\ref{fig:vacantSpacesExample}-right) of Adobe Photoshop~\cite{photoshop}, 
-  a popular mosaicing software showcases the inability to handle vacant spaces.
+  The problem faced while solving `hard' jigsaw puzzle is similar to the problem
+  faced by standard mosaicing methods while creating a mosaic of scene
+  containing vacant spaces. The standard mosaicing method uses feature matching
+  algorithms for estimating the homography between two images. Feature matching
+  algorithms require detection of sufficient features in both images. However,
+  scenes like Figure~\ref{fig:vacantSpacesExample}(left) contain large regions
+  with vacant spaces. Such regions result in very few (or almost zero) features
+  which pose a problem for stitching images containing such regions. The output
+  (shown in Figure~\ref{fig:vacantSpacesExample}-right) of Adobe
+  Photoshop~\cite{photoshop}, a popular mosaicing software showcases the
+  inability to handle vacant spaces.
   
  \begin{figure}[h!]
 \centering
@@ -263,8 +265,8 @@ left or right in this puzzle.}
   when parts of the scene are repeated. It results in images which are not
   taken from adjacent positions being stitched together.
   Figure~\ref{fig:confusingFeatures} shows output of
-  AutoStitch~\cite{autostitch}, the state of the art stitcher, on an input scene
-  containing repetitive patterns. It can be seen that images taken from
+  AutoStitch~\cite{autostitch}, the state of the art stitcher, on an input
+  scene containing repetitive patterns. It can be seen that images taken from
   positions far apart from each other get stitched together as the matching
   algorithm matches features from those images.
 
@@ -329,10 +331,11 @@ images.}
 \begin{figure}[h!]
 \centering
 \includegraphics[width=0.98\linewidth]{figures/multiplanar/JlinkageProblem}
-\caption{Problem in J-linkage clustering. J-linkage doesn't use validity of plane
-boundaries to cluster points to correct planes. Points marked by black ovals
-are the result of erroneous estimations by PTAM. Since their geometric
-affinity is towards opposite planes, they are labeled incorrectly.}
+\caption[Problem in J-linkage clustering]{Problem in J-linkage clustering.
+J-linkage doesn't use validity of plane boundaries to cluster points to correct
+planes. Points marked by black ovals are the result of erroneous estimations by
+PTAM. Since their geometric affinity is towards opposite planes, they are
+labeled incorrectly.}
 \label{fig:jlinkageProblem}
 \end{figure}
 
@@ -408,7 +411,7 @@ mentioned challenges are:\\
     \label{fig:vaccantSpaces_workflow} 
   \end{figure}
   
-  We propose to solve the vacant space problem by using additional information
+  We solve the vacant space problem by using additional information
   available from an inexpensive quadcopter.  Quadcopters contain an inertial
 measurement unit (IMU) that has positional information. We use the positional
 information from IMU primarily for two purposes:
@@ -557,13 +560,12 @@ discontinuities in the pattern's position due to missing video
 frames. This latter problem makes it challenging to apply tracking algorithms
 that can exploit temporal coherence for determining the fiducial's position.
 
-To address these problems, we propose a fiducial that is designed to be
-resilient to motion blur. Our design is based on circles as shown in
-Figure~\ref{fig:fiducials_result} (Bottom). The design is based on the
-observation that motion blur from a quadcopter tends to be linear in nature. As
-such, when our fiducial is blurred, there is no blur in the direction
-perpendicular to the direction of motion. This allows the signature of the
-fiducial to remain intact in any direction.
+To address these problems, we designed a blur resilient fiducial.
+Our design is based on circles as shown in Figure~\ref{fig:fiducials_result}
+(Bottom). The design is based on the observation that motion blur from a
+quadcopter tends to be linear in nature. As such, when our fiducial is blurred,
+there is no blur in the direction perpendicular to the direction of motion.
+This allows the signature of the fiducial to remain intact in any direction.
 
 Figure~\ref{fig:fiducial_workflow} shows the process involved in fiducial
 recognition. Our recognition algorithm has four steps. In Step~1, we apply a Gabor
@@ -603,8 +605,8 @@ fiducial.
   revolving around our setup]{Comparison of ARTag and our fiducial when quadcopter is
   revolving around our setup. 
 \textbf{Top} ARTags are not recognized, shown by an absence of green rectangles.
-\textbf{Bottom} In similar conditions, proposed fiducials are successfully
-recognized. The overall recognition rate of proposed fiducials is 90\% while that
+\textbf{Bottom} In similar conditions, our fiducials are successfully
+recognized. The overall recognition rate of our fiducials is 90\% while that
 of ARTags is around 60\%. }
 \label{fig:fiducials_result}
 \end{figure}
@@ -618,7 +620,7 @@ in the area of mosaicing, autonomous navigation of quadcopter as well as
 fiducials. We use this chapter as an opportunity to establish and contrast the
 scope of this thesis with respect to prior art.\\
 
-\noindent \textbf{Chapter 3} elaborates our proposed method for mosaicing
+\noindent \textbf{Chapter 3} elaborates our method for mosaicing
 scenes with vacant spaces using quadcopter. Proposed method fuses positional
 information from quadcopter with images to first, find out the position from which each
 image is taken and accordingly sort the images in two dimensional grid; second,
@@ -632,9 +634,9 @@ are addressed.\\
 
 \noindent \textbf{Chapter 5} elaborates on our design of blur
 resilient fiducial for identification of objects under a heavy motion blur. We
-have also proposed algorithm for robust recognition of our blur resilient
+have also devised algorithm for robust recognition of our blur resilient
 fiducial in this chapter.\\
  
  \noindent \textbf{Chapter 6} concludes the thesis by summarizing our
- contributions.
-  We have also discussed possible ways to extend some of the ideas proposed in this thesis.
+ contributions. We have also discussed possible ways to extend some of the
+ ideas presented in this thesis.

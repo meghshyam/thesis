@@ -94,7 +94,7 @@ Parrot's ARDrone 2.0 has two cameras, front camera with a wide-angle lens
 pixels) at 30 FPS, while vertical camera (pointing downwards) having QVGA
 resolution (320 $\times$ 240) at 60 FPS used for measuring ground speed.
 Though front camera can capture the images at HD resolution, it can transmit
-images over Wi-Fi at only  lower resolution (640 $\times$ 360 pixels). Hence we
+images over Wi-Fi at only  lower resolution (640 $\times$ 360 pixels). Hence, we
 need to use USB storage device on quadcopter to store a video streamed by the
 quadcopter camera. 
 
@@ -109,9 +109,9 @@ allocates a free, odd IP address (typically 192.168.1.1).
    \item The user connects the client device to this SSID network.
    \item The client device requests an IP address from the drone DHCP server.
    \item The AR.Drone DHCP server grants the client with an IP address which is
-   the drone's own IP address plus a number between 1 and 4 e.g., 192.168.1.3
+   the drone's own IP address plus a number between 1 and 4 e.g., 192.168.1.3.
    \item The client device can start sending requests (Land, Takeoff, etc.) to
-   the AR.Drone IP address and its services ports
+   the AR.Drone IP address and its services ports.
 \end{enumerate}
 
 ARDrone 2.0 can be controlled from the client device through 3 main communication
@@ -149,13 +149,13 @@ expertise.
    \label{fig:manualControl}
 \end{figure}
 
-There are also some paid apps such AR.pro for piloting AR Drone. AR.pro app
-has some advanced settings which are not available in AR.Freeflight e.g.,
-changing WiFi channel, Altitude limiter, Dual Joystick support, etc. All of
-these apps, as well as softwares, have the main limitation that as it involves a lot of manual
-intervention, it lacks precision, which is required in an imaging application.
-E.g., if we want the quadcopter to complete a rectangular loop and come back to its original
-position, it fails to do so. 
+There are also some paid mobile applications such as AR.pro for piloting AR
+Drone. AR.pro application has some advanced settings which are not available in
+AR.Freeflight e.g., changing WiFi channel, Altitude limiter, Dual Joystick support, etc. All of
+these applications involve a lot of manual intervention.  It results in lack of
+precision, which is required in an imaging application, e.g., if we want a
+quadcopter to complete a rectangular loop and come back to its original
+position, it fails to do so.
 
 Some flight controller softwares use add-on GPS for autonomous navigation of
 a quadcopter. However in GPS-denied areas e.g., indoor, we cannot use such
@@ -173,7 +173,7 @@ based on PTAM\cite{klein}. Engel et al. have used Extended Kalman Filter (EKF)
 to fuse visual observation model with the odometry observation model to estimate
 the pose of the quadcopter. They have also developed a method for
 correctly estimating the scale of the built 3D map. But, they have not ensured
-a hundred percent scale accuracy which results in an inaccurate 3D map of
+high scale accuracy which results in an inaccurate 3D map of
 the surrounding environment.
 
 \section{Mosaicing of scenes}
@@ -181,7 +181,7 @@ Panoramic image stitching (alternatively, image mosaicing) is a
 well-studied problem in the field of computer vision.  Representative
 works include~\cite{Milgram1975}, \cite{Milgram1977}, \cite{Capel},
 \cite{Szeliski1997}, \cite{Brown07}, \cite{Brown03}.  A full discussion
-on related works is outside the scope of this work, readers are
+on related works is outside the scope of this thesis. Readers are
 referred to~\cite{Szeliski05imagealignment} for an excellent survey.
 Given the maturity of this area, there are various freeware as well as
 commercial software available for performing image stitching; most
@@ -265,9 +265,9 @@ ARToolkit in various augmented-reality-based applications.
 %   \includegraphics[width=\linewidth]{figures/fiducial/our_fiducial.jpg}
 %   Our Fiducial
 %  \end{subfigure}
- \caption[Prior fiducials]{Prior fiducials and our proposal. 
- While each code has its pros and cons depending on the environment, no
- prior code is expressly designed to be recognized under motion blur.}
+ \caption[Prior fiducials]{Prior fiducials. While each code has its pros and
+ cons depending on the environment, no prior code is expressly designed to be
+ recognized under motion blur.}
  \label{fig:previous_work}
 \end{figure}
 
@@ -317,7 +317,7 @@ object is the fiducial.  There is a very large body of research
 dedicated to tracking and interested readers are referred
 to~\cite{Yilmaz:2006} for a good survey.
 
-Most tracking methods~\cite{Ross:2008,Wu:2009,Perez02,Mei:2009} assume
+Most tracking methods~\cite{Ross:2008, Wu:2009, Perez02, Mei:2009} assume
 the image sequence to be blur free. In reality, however, the presence
 of motion blur in a video sequence is often unavoidable. To this end,
 Wu et al.~\cite{Wu:2011} proposed the Blur-driven Tracker (BLUT)

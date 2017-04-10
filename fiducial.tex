@@ -40,7 +40,7 @@ discontinuities in the pattern's position due to missing video
 frames. This problem makes it challenging to apply tracking algorithms that can
 exploit temporal coherence for determining the fiducial's position.
 
-\noindent\textbf{Contributions:}~~To address these problems, we propose a
+\noindent\textbf{Contributions:}~~To address these problems, we design a
 fiducial that is designed to be resistant to motion blur. Our design
 is based on circles as shown in Figure~\ref{fig:fiducial_teaser}--(c,d). The
 design is based on the observation that motion blur from a quadcopter
@@ -71,7 +71,7 @@ resistant marker, especially in quadcopter settings.
     \textbf{(Left)} A drone encounters three different fiducials. 
     \textbf{(Right, Top)} Output of ALVAR~\cite{alvar} under favorable and blurred
     circumstances. No green border is seen in (b) signifying failure.
-    \textbf{(Right, Bottom)} Output of the proposed fiducial. Green
+    \textbf{(Right, Bottom)} Output of our fiducial. Green
     border is seen in both (c) and (d).
     \label{fig:fiducial_teaser}}
   \end{figure}
@@ -134,7 +134,7 @@ ARTag fiducials blurred with various blur scales at different orientations. \tex
 
 \subsection{Blur Resistant Fiducial}
 
-We propose a binary coded fiducial that uses concentric white rings of
+We designed a binary coded fiducial that uses concentric white rings of
 equal widths on a black background with a blurred
 border\footnote{Obviously, this design can be inverted to have a white
   background with black rings.}. The outermost and innermost rings
@@ -340,7 +340,7 @@ our results with the Blur-driven tracker (BLUT)\cite{Wu:2011}.
 
 \subsection{Comparison with ARTag}
 First, we repeat the same blur simulation experiment
-(Section~\ref{sec:blurtest}) on the proposed fiducial. Specifically,
+(Section~\ref{sec:blurtest}) on our fiducial. Specifically,
 we build our blur resistant patterns at 150$\times$150 pixel
 resolution and blurred them along various orientations with different
 blur scales. 
@@ -370,7 +370,7 @@ Section~\ref{sec:discussion}.
 \centering
 \includegraphics[width=\linewidth]{figures/fiducial/recognition_rate.pdf}  
 \caption[Comparison of recognition rate of fiducials]{Comparison of recognition
-rate of fiducials.  The proposed fiducial handsomely outperforms prior methods.}
+rate of fiducials.  Our fiducial handsomely outperforms prior methods.}
 \label{fig:recognition_rate}
 \end{figure}
 
@@ -477,8 +477,8 @@ they were the correct fiducials and not other objects in the scene.
     4 & 1081 & 11 &  60.3 & 93.54  \\ \cline{1-5}
   \end{tabularx}
   \caption[Comparison of recognition rate on real data]{ 
-  \label{tab:recognition_accuracy} Recognition rate of ARTag and proposed fiducials on real
-    data captured through AR Drone. Each row shows analysis of a test
+  \label{tab:recognition_accuracy} Recognition rate of ARTag and our fiducials
+  on real data captured through AR Drone. Each row shows analysis of a test
     dataset captured for our fiducial with different binary codes embedded in it.
     Each dataset has around 1000 frames captured representing roughly two
     minutes of video.} 
@@ -529,12 +529,10 @@ of ARTags is only around 60\%.
   revolving around our setup]{Comparison of ARTag and our fiducial when quadcopter is
   revolving around our setup. 
 \textbf{Top} ARTags are not recognized, shown by an absence of green rectangles. \textbf{Middle} In
-similar conditions, proposed fiducials are successfully
-recognized. The overall recognition rate of proposed
+similar conditions, our fiducials are successfully recognized. The overall recognition rate of proposed
 fiducials is 90\% while that of ARTags is around 60\%. 
 \textbf{Bottom Rows} Time view of recognition. ARTag is ``choppy'' with
-frequent losses, while the proposed fiducial (extreme bottom) is
-``up'' almost all the 
+frequent losses, while our fiducial (extreme bottom) is ``up'' almost all the 
 time.}
 \label{fig:setup}
 \end{figure*}
@@ -545,9 +543,8 @@ time.}
 We also compare our approach with tracking designed for blurred input
 scenes.  We have used four image sequences (consisting of around 1000
 frames each). Each sequence contains different fiducials so that we
-are able to contrast the performance of BLUT~\cite{Wu:2011} with the
-proposed method.  From the images in the top rows of
-Figure~\ref{fig:BLUT_compare_00}--\ref{fig:BLUT_compare_11},
+are able to contrast the performance of BLUT~\cite{Wu:2011} with our method. 
+From the images in the top rows of Figure~\ref{fig:BLUT_compare_00}--\ref{fig:BLUT_compare_11},
 we can see that BLUT is able to track the fiducial when the position
 of fiducial does not change too much in successive frames. Also, it
 can be seen that once BLUT loses track of the fiducial, it is not
@@ -801,10 +798,9 @@ further research.
 \section{Concluding remarks}
 Quadcopters are subject to quick and unstable motions that can cause
 significant motion blur in the captured images. This severely affects
-the recognition rate of existing fiducials. We proposed the
-design of a fiducial that is resistant to motion blur. Our design of
-contrasting concentric rings is based on the observation that the
-direction perpendicular to the motion blur direction will be
+the recognition rate of existing fiducials. We designed a blur
+resilient fiducial. Our design of contrasting concentric rings is based on the
+observation that the direction perpendicular to the motion blur direction will be
 unaffected by the blur and therefore still be recognizable. We have
 shown through experimental validation that our fiducial will work
 under large amounts of motion blur and can significantly outperform
