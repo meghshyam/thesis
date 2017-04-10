@@ -429,18 +429,20 @@ run the k-means algorithm using the initial labels given by JLinkage. Now, point
 belong to the correct cluster as shown in Figure \ref{fig:multiplane}(Middle). 
 However, we don't want points which are far away from the plane in the normal direction.
 Hence, we remove those points which are more than 95 percentile farther from the cluster 
-centroid along the plane normal. We also trim the boundaries of the plane by the bounding box of the
-enclosed points. The final output is shown in the Figure \ref{fig:multiplane}(Bottom).
+centroid along the plane normal. We also trim the boundaries of the plane by
+the bounding box of the enclosed points. The final output is shown in the
+Figure \ref{fig:multiplane}(Bottom).
 
 \begin{figure}[h!]
 \centering
 \includegraphics[width=\linewidth]{figures/multiplanar/multiplaneDetection}
-\caption{Process of finding bounded multiplanar regions from J-linkage output.
+\caption[Process of finding bounded multiplanar regions from J-linkage
+output.]{Process of finding bounded multiplanar regions from J-linkage output.
 The top image shows us the initial labeling given by J-linkage. Later, we run
 the k-means algorithm using the initial labeling given by J-linkage. The output
-is shown in the middle figure. Finally, we remove outliers which are farther from the
-plane along normal direction and trim boundaries of the plane as shown in
-the bottom figure.}
+is shown in the middle figure. Finally, we remove outliers which are farther
+from the plane along normal direction and trim boundaries of the plane as shown
+in the bottom figure.}
 \label{fig:multiplane}
 \end{figure}
 
@@ -463,8 +465,8 @@ the overlap is set at thirty percent of the cell area to deal even with sparser
 \begin{figure}[h!]
 \centering
 \includegraphics[width=\linewidth]{figures/multiplanar/PathPlanningGrid}
-\caption{Grid of overlapping cells designed for path planning. We create a
-grid for each bounded planar region. The cell width and the cell height is
+\caption[Creation of Grid for Path planning]{Grid of overlapping cells designed
+for path planning. We create a grid for each bounded planar region. The cell width and the cell height is
 decided based on the area we would like to capture in one frame. Overlap parameter is
 a function of overlap required in feature space for successful stitching.
 We find the camera position for each cell in the grid which in turn
@@ -484,9 +486,9 @@ manner, so that the whole region is captured.
 
 \begin{figure}[h!]
 \centering
-\includegraphics[width=\linewidth]{figures/multiplanar/solvepnp}
-\caption{Finding the camera position for capturing the desired cell area in a
-single image. Note that, imaging area coordinates are in metric units, while image
+\includegraphics[width=\linewidth]{figures/multiplanar/SolvePnP}
+\caption[Estimating camera position to capture the cell area in one
+image]{Finding the camera position for capturing the desired cell area in a single image. Note that, imaging area coordinates are in metric units, while image
 coordinates are in pixels. We use point correspondence problem to estimate the
 camera position.}
 \label{fig:solvepnp}
@@ -644,8 +646,8 @@ mosaiced using our algorithm to get the final mosaicing output as shown in Figur
 \begin{figure}
 \centering
 \includegraphics[width=0.9\textwidth]{figures/multiplanar/ladyResult.pdf}
-\caption{There is a 15 feet tall wall as shown in the long-range photograph
-(left) which we would like to image orthographically with details. We cannot
+\caption[Result: Single Plane]{There is a 15 feet tall wall as shown in the
+long-range photograph (left) which we would like to image orthographically with details. We cannot
 select the whole area in a single instance as we cannot go back to see the whole
 wall. Hence, we selected the desired area in two steps as shown in GUI for area
 selection (middle-top and middle-bottom). Green quadrilateral shows user selected area
@@ -767,8 +769,8 @@ The final result is shown in the Figure \ref{fig:resultFrontBack}(Bottom).
 \begin{figure}
 \centering
 \includegraphics[width=0.9\textwidth]{figures/multiplanar/frontback.pdf}
-\caption{There are two Chinese lanterns' exhibits, arranged parallel
-to each other but having different depths as shown in the long-range
+\caption[Result: Imaging at different depths]{There are two Chinese lanterns'
+exhibits, arranged parallel to each other but having different depths as shown in the long-range
 photograph(top-left). It is not possible to mosaic both of them in a single
 panorama due to the difference in depths. We imaged those exhibits
 independently through a quadcopter and brought the mosaic of the exhibit at larger
